@@ -10,18 +10,14 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(180deg, black 25%, rgba(255, 0, 0, 0.658) 100%);
+  color: #e2e8f0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   min-height: 100vh;
-}
-
-/* Remove default button styles to let Bootstrap handle them */
-button {
-  border: none;
-  background: none;
-  font-family: inherit;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }

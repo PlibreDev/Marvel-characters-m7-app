@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from marshmallow import ValidationError, fields
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
-from typing import Optional, Mapping
+from typing import Optional, Mapping, Any
 
 app = Flask(__name__)
 
@@ -24,6 +24,7 @@ db.init_app(app)
 ma = Marshmallow(app)
 CORS(app)
 
+# Define the Character model
 class Character(Base):
     __tablename__ = "characters"
     
@@ -48,21 +49,20 @@ class CharacterSchema(ma.Schema):
         
 # Initialize Schemas
 character_schema = CharacterSchema()
-characters_schema = CharacterSchema(many=True) #Can serialize many Trainer objects (a list of them)
+characters_schema = CharacterSchema(many=True) 
 
 def create_database():
     root_engine = create_engine("mysql+mysqlconnector://root:pj627129@localhost")  
     with root_engine.connect() as connection:
         connection.execute(text("CREATE DATABASE IF NOT EXISTS marvel"))
 
-# Without the app context, Flask wouldn't know which app's configuration to use.     
+# Create the database and tables if they do not exist   
 with app.app_context():
     create_database()
     db.create_all() 
     
     
-# CRUD Endpoints for Characters
-
+# CRUD Endpoints
 @app.route('/characters', methods=['GET'])
 def get_characters():
     query = select(Character)
@@ -83,7 +83,10 @@ def create_character():
         return jsonify({"message": "No JSON data provided"}), 400
     
     try:
-        character_data: Mapping[str, Any] = character_schema.load(request.json)
+        data = request.json
+        if not isinstance(data, Mapping):
+            return jsonify({"message": "Invalid JSON data format"}), 400
+        character_data: Mapping[str, Any] = character_schema.load(data)
     except ValidationError as e:
         return jsonify(e.messages), 400
     
@@ -111,7 +114,10 @@ def update_character(id):
         return jsonify({"message": "No JSON data provided"}), 400
     
     try:
-        character_data: Mapping[str, Any] = character_schema.load(request.json)
+        data = request.json
+        if not isinstance(data, Mapping):
+            return jsonify({"message": "Invalid JSON data format"}), 400
+        character_data: Mapping[str, Any] = character_schema.load(data)
     except ValidationError as e:
         return jsonify(e.messages), 400
 

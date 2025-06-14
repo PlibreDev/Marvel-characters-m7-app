@@ -6,8 +6,14 @@ function NavbarComponent() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="shadow-lg">
       <Container>
-        <Navbar.Brand as={Link} to="/" className="fw-bold">
-          ⚡ Marvel Universe
+        <Navbar.Brand as={Link} to="/" className="fw-bold d-flex">
+          <img
+            src="/Marvel_Logo.png" 
+            alt="Marvel Logo"
+            height="36"
+            className="me-2"
+            style={{ background: 'white', borderRadius: '4px', padding: '2px' }}
+          />
         </Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -15,16 +21,13 @@ function NavbarComponent() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
             <Nav.Link as={Link} to="/characters">
-              Characters
+              Character Cards
             </Nav.Link>
             <Nav.Link as={Link} to="/create">
-              Add Character
+              Create Character
             </Nav.Link>
             <Nav.Link as={Link} to="/manage">
               Manage Characters
-            </Nav.Link>
-            <Nav.Link as={Link} to="/edit">
-              Edit Character
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

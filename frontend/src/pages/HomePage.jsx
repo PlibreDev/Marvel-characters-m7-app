@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
-    <Container className="py-5">
+    <Container className="mt-5 py-5 flex-grow-1 text-light">
       <Row className="justify-content-center text-center">
         <Col md={8}>
           <h1 className="display-3 fw-bold mb-4">

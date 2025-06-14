@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function NotFoundPage() {
   return (
-    <Container className="py-5">
+    <Container className="py-5 flex-grow-1 bg-dark text-light">
       <Row className="justify-content-center text-center">
         <Col md={6}>
           <h1 className="display-1 fw-bold text-danger">404</h1>
