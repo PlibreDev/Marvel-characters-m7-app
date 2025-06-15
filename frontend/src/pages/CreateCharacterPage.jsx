@@ -4,20 +4,20 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const wikimediaUrls = [
-  "https://upload.wikimedia.org/wikipedia/en/8/8c/Jean_Grey_%28Modern%29.webp",
-  "https://static.wikia.nocookie.net/marveldatabase/images/f/f0/Adam_Warlock_%28Earth-616%29_from_Infinity_Wars_Infinity_Vol_1_1_001.jpg/revision/latest?cb=20190302234015",
-  "https://upload.wikimedia.org/wikipedia/en/5/5d/Wolverine_%28James_%27Logan%27_Howlett%29.png",
-  "https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Cyclops_%28Scott_Summers_circa_2019%29.png/250px-Cyclops_%28Scott_Summers_circa_2019%29.png",
-  "https://upload.wikimedia.org/wikipedia/en/9/94/Gambit_%28Marvel_Comics%29.png",
-  "https://upload.wikimedia.org/wikipedia/en/4/4f/Doctor_Strange_Vol_4_2_Ross_Variant_Textless.jpg",
-  "https://upload.wikimedia.org/wikipedia/en/1/1b/X-men_angel_archangel.jpg",
-  "https://upload.wikimedia.org/wikipedia/en/6/66/Doctor_Doom_%28Marvel_Comics_character%29.png",
-  "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/5/51/Mysterio_Infobox.png/revision/latest?cb=20241008191935",
-  "https://upload.wikimedia.org/wikipedia/en/e/ec/Red_Skull_%28Johann_Schmidt%29.png",
-  "https://upload.wikimedia.org/wikipedia/en/a/a0/Apocalypse_%28En_Sabah_Nur_-_circa_2009%29.jpg",
-  "https://static.wikia.nocookie.net/monster/images/3/3b/Carnage_marvel.jpg/revision/latest?cb=20210607120528",
-  "https://static.wikia.nocookie.net/marveldatabase/images/7/74/Marvel_Comics_Vol_1_1000_Artgerm_Collectibles_Exclusive_Emma_Frost_Virgin_Variant.jpg/revision/latest/scale-to-width-down/1000?cb=20211002082122",
-  "https://static.wikia.nocookie.net/marveldatabase/images/4/4d/Immortal_Thor_Vol_1_17_Go_Variant_Textless.jpg/revision/latest/scale-to-width-down/1000?cb=20241123063641",
+  {charName: "Jean Grey" , url: "https://upload.wikimedia.org/wikipedia/en/8/8c/Jean_Grey_%28Modern%29.webp"},
+  {charName: "Adam Warlock", url: "https://static.wikia.nocookie.net/marveldatabase/images/f/f0/Adam_Warlock_%28Earth-616%29_from_Infinity_Wars_Infinity_Vol_1_1_001.jpg/revision/latest?cb=20190302234015"},
+  {charName: "Wolverine", url: "https://upload.wikimedia.org/wikipedia/en/5/5d/Wolverine_%28James_%27Logan%27_Howlett%29.png"},
+  {charName: "Cyclops", url: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Cyclops_%28Scott_Summers_circa_2019%29.png/250px-Cyclops_%28Scott_Summers_circa_2019%29.png"},
+  {charName: "Gambit", url: "https://upload.wikimedia.org/wikipedia/en/9/94/Gambit_%28Marvel_Comics%29.png"},
+  {charName: "Doctor Strange", url: "https://upload.wikimedia.org/wikipedia/en/4/4f/Doctor_Strange_Vol_4_2_Ross_Variant_Textless.jpg"},
+  {charName: "Archangel", url: "https://upload.wikimedia.org/wikipedia/en/1/1b/X-men_angel_archangel.jpg"},
+  {charName: "Doctor Doom", url: "https://upload.wikimedia.org/wikipedia/en/6/66/Doctor_Doom_%28Marvel_Comics_character%29.png"},
+  {charName: "Mysterio", url: "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/5/51/Mysterio_Infobox.png/revision/latest?cb=20241008191935"},
+  {charName: "Red Skull", url: "https://upload.wikimedia.org/wikipedia/en/e/ec/Red_Skull_%28Johann_Schmidt%29.png"},
+  {charName: "Apocalypse", url: "https://upload.wikimedia.org/wikipedia/en/a/a0/Apocalypse_%28En_Sabah_Nur_-_circa_2009%29.jpg"},
+  {charName: "Carnage", url: "https://static.wikia.nocookie.net/monster/images/3/3b/Carnage_marvel.jpg/revision/latest?cb=20210607120528"},
+  {charName: "Emma Frost", url: "https://static.wikia.nocookie.net/marveldatabase/images/7/74/Marvel_Comics_Vol_1_1000_Artgerm_Collectibles_Exclusive_Emma_Frost_Virgin_Variant.jpg/revision/latest/scale-to-width-down/1000?cb=20211002082122"},
+  {charName: "Captain America", url: "https://upload.wikimedia.org/wikipedia/en/b/bf/CaptainAmericaHughes.jpg"},
 ];
 
 function CreateCharacterPage() {
@@ -60,7 +60,7 @@ function CreateCharacterPage() {
   return (
     <Container className="mt-5 py-4 bg-dark p-5 border-radius-12 flex-grow-1 text-light">
       <h2 className="text-center">Create New Character</h2>
-      <p className="text-center mb-5">Fill in the details below to create a new character. If you'd like to create one of the suggested characters, just click the link to add the URL to the image field.</p>
+      <p className="text-center mb-5">Fill in the details below to create a new character. If you'd like to create one of the suggested characters, just click the name of the suggested character to add the URL to the image field and enter the remaining information from sources online. To create your own character, just make sure to use the proper image address and not the link to the picture's page.</p>
       {success && <Alert variant="success">Character created successfully! Redirecting...</Alert>}
       {error && <Alert variant="danger">{error}</Alert>}
       {loading ? (
@@ -69,7 +69,7 @@ function CreateCharacterPage() {
         <>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formName">
-              <Form.Label>Real Name</Form.Label>
+              <Form.Label>Hero Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
@@ -130,20 +130,23 @@ function CreateCharacterPage() {
           {/* Suggestions BELOW the form */}
           <div className="mt-4">
             <div className="fw-bold mb-1" style={{ fontSize: '0.95rem' }}>Character Image Suggestions:</div>
-            <ul className="list-unstyled" style={{ maxHeight: 160, overflowY: 'auto' }}>
-              {wikimediaUrls.map((url, idx) => (
-                <li key={idx}>
-                  <Button
-                    variant="link"
-                    className="p-0 text-info"
-                    style={{ fontSize: '0.95rem', wordBreak: 'break-all' }}
-                    onClick={() => handleUrlClick(url)}
-                  >
-                    {url}
-                  </Button>
-                </li>
-              ))}
-            </ul>
+              <ul className="list-unstyled">
+                {wikimediaUrls.map((item, idx) => (
+                  <li key={idx}>
+                    <Button
+                      variant="link"
+                      className="p-0 text-info"
+                      style={{ fontSize: '0.95rem', wordBreak: 'break-all' }}
+                      onClick={() => handleUrlClick(item.url)}
+                    >
+                      {item.charName}
+                    </Button>
+                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="ms-2 text-secondary" style={{fontSize: '0.85rem'}}>
+                      [View Image]
+                    </a>
+                  </li>
+                ))}
+              </ul>
           </div>
         </>
       )}
